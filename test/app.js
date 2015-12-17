@@ -13,7 +13,7 @@ describe('generator-yintai-springboot:app', function () {
 
   it('creates files', function () {
     assert.file([
-      'dummyfile.txt'
+      'build.gradle'
     ]);
   });
 });
