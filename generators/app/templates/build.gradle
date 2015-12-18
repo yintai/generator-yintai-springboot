@@ -29,40 +29,33 @@ targetCompatibility = 1.8
 [compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.encoding = 'UTF-8'
 
 repositories {
-    <% if( privateRepositories!='' ) {%>maven { url privateRepositories}<%}%>
+    <% if( privateRepository!='' ) {%>maven { url '<%=privateRepository%>' }<%}%>
     mavenCentral()
 }
 
 dependencies {
     compile('org.codehaus.groovy:groovy')
-    <% if( jetty ) {%>
-    compile('org.springframework.boot:spring-boot-starter-jetty')
+    <% if( jetty ) {%>compile('org.springframework.boot:spring-boot-starter-jetty')
     compile('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
+    }<%}%>
+    <% if( actuator ) {%>compile('org.springframework.boot:spring-boot-starter-actuator')<%}%>
+    <% if ( jpa ) {%>compile('org.springframework.boot:spring-boot-starter-data-jpa')<%}%>
+    <% if( sql ) {%>//TODO Do not need h2 runtime in product environment.
+    compile("org.jadira.usertype:usertype.core:4.0.0.GA") {
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
-    <%}%>
-    <% if( actuator ) {%>
-    compile('org.springframework.boot:spring-boot-starter-actuator')
-    <%}%>
-    <% if ( jpa ) {%>
-    compile('org.springframework.boot:spring-boot-starter-data-jpa')
-    <%}%>
-    <% if( sql ) {%>
-    //TODO Do not need h2 runtime in product environment.
     runtime('com.h2database:h2:1.4.190')
-    runtime('org.postgresql:postgresql:9.4-1201-jdbc4')
-    <%}%>
+    runtime('org.postgresql:postgresql:9.4-1201-jdbc4')<%}%>
     testCompile(
         'org.springframework.boot:spring-boot-starter-test',
         'org.spockframework:spock-core:1.0-groovy-2.4',
         'org.spockframework:spock-spring:1.0-groovy-2.4'
     )
-    <% if( hasSample ) {%>
-    compile('org.nofdev:service-host-mvc:1.0.5')
+    <% if( hasSample ) {%>compile('org.nofdev:service-host-mvc:1.0.5')
     compile('org.nofdev:service-client-java:1.0.5')
     testCompile('org.mock-server:mockserver-netty:3.10.2')
-    compile('net.logstash.logback:logstash-logback-encoder:4.5.1')
-    <%}%>
+    compile('net.logstash.logback:logstash-logback-encoder:4.5.1')<%}%>
 }
 
 eclipse {
@@ -77,7 +70,7 @@ task wrapper(type: Wrapper) {
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
-  push = true
+  push = false
   applicationName = jar.baseName
   dockerfile = file('src/main/docker/Dockerfile')
   doFirst {

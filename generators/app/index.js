@@ -43,8 +43,8 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
             },
             {
                 type: 'string',
-                name: 'privateRepositories',
-                message: '(3/11) What private repositories would you like to use, separated by commas?'
+                name: 'privateRepository',
+                message: '(3/11) What private repository would you like to use?'
             },
             {
                 type: 'string',
