@@ -19,17 +19,13 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 apply plugin: 'docker'
 
-jar {
-    baseName = '<%= baseName %>'
-    version = '0.0.1-SNAPSHOT'
-}
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 [compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.encoding = 'UTF-8'
 
 repositories {
-    <% if( privateRepository!='' ) {%>maven { url '<%=privateRepository%>' }<%}%>
+    <% if( extraMavenRepo!='' ) {%>maven { url '<%=extraMavenRepo%>' }<%}%>
     mavenCentral()
 }
 

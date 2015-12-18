@@ -41,8 +41,8 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
             },
             {
                 type: 'string',
-                name: 'privateRepository',
-                message: '(3/11) What private repository would you like to use?'
+                name: 'extraMavenRepo',
+                message: '(3/11) What private maven repository would you like to use? (eg. https://nexus.yintai.org/public)'
             },
             {
                 type: 'string',
@@ -172,7 +172,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
 
         //resources
         this.template(this.templatePath(resourcesDir + 'application.yml'), this.destinationPath(resourcesDir + 'application.yml'), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
-        if (this.jetty) {
+        if (this.props.jetty) {
             this.fs.copy(this.templatePath(resourcesDir + 'keystore.jks'), this.destinationPath(resourcesDir + 'keystore.jks'));
         }
         //TODO test
