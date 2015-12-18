@@ -1,10 +1,8 @@
 'use strict';
-var util = require('util');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
-var yosay = require('yosay');
 var _ = require('lodash');
-var pascalCase = require('pascal-case')
+var pascalCase = require('pascal-case');
 var path = require('path');
 
 var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
@@ -186,7 +184,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
         this.template(this.templatePath('README.md'), this.destinationPath('README.md'), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
 
         //git
-        this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'));
+        this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
     },
 
     install: function () {

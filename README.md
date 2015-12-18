@@ -10,8 +10,14 @@ npm install -g yo
 npm install -g generator-yintai-springboot
 ```
 
-> Because we haven't publish this generator to the npmjs.org repository, so please clone and install locally currently.
+> Because we haven't publish this generator to the npmjs.org repository, so please 
 >
+```bash
+npm install -g https://github.com/yintai/generator-yintai-springboot.git
+```
+
+or clone and install locally currently.
+
 ```bash
 git clone git@github.com:yintai/generator-yintai-springboot.git
 cd generator-yintai-springboot/
@@ -23,7 +29,7 @@ npm link
 Then generate your new project:
 
 ```bash
-yo generator-yintai-springboot
+yo yintai-springboot
 ```
 
 ## Getting To Know Yeoman
