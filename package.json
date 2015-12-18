@@ -1,6 +1,6 @@
 {
   "name": "generator-yintai-springboot",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A best practice for yintai micro service project based on springboot",
   "homepage": "https://github.com/yintai/generator-yintai-springboot",
   "author": {
