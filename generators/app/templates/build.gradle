@@ -3,11 +3,13 @@ buildscript {
         springBootVersion = '<%= springBootVersion %>'
     }
     repositories {
+        <% if( extraMavenRepo!='' ) {%>maven { url '<%=extraMavenRepo%>' }<%}%>
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath('se.transmode.gradle:gradle-docker:1.2')
+        classpath('net.researchgate:gradle-release:2.3.4')
     }
 }
 
@@ -18,6 +20,11 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 apply plugin: 'docker'
+apply plugin: 'net.researchgate.release'
+
+jar {
+    baseName = '<%= baseName %>'
+}
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -69,6 +76,11 @@ task buildDocker(type: Docker, dependsOn: build) {
   push = false
   applicationName = jar.baseName
   dockerfile = file('src/main/docker/Dockerfile')
+
+  // TODO A workaround to resolve dynamic builded jar file name.
+  addFile "${applicationName}-${version}.jar", "app.jar"
+  runCommand "bash -c 'touch /app.jar'"
+
   doFirst {
     copy {
       from jar
@@ -76,3 +88,12 @@ task buildDocker(type: Docker, dependsOn: build) {
     }
   }
 }
+
+release {
+    git {
+        requireBranch = 'develop'
+        pushToRemote = 'origin'
+        pushToBranchPrefix = ''
+    }
+}
+afterReleaseBuild.dependsOn buildDocker
