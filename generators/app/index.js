@@ -36,7 +36,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
                 name: 'dockerPrefix',
                 message: '(2/11) What is your Docker prefix?',
                 default: function (response) {
-                    return response.organizationName;
+                    return 'com.' + response.organizationName;
                 }
             },
             {
@@ -79,15 +79,15 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
                 type: 'string',
                 name: 'springBootVersion',
                 message: '(9/11) What version of Spring Boot would you like to use?',
-                default: '1.3.0.RELEASE'
+                default: '1.3.1.RELEASE'
             },
             {
                 type: 'checkbox',
                 name: 'dependencies',
-                message: '10/11) Select your dependencies.',
+                message: '(10/11) Select your dependencies.',
                 choices: [
                     {
-                        name: 'Jetty (Tomcat will be uninstalled)',
+                        name: 'Jetty (Tomcat will be excluded)',
                         value: 'jetty',
                         checked: 'true'
                     },
