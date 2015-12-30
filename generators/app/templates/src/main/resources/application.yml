@@ -10,7 +10,11 @@ yintai:
     defaultConnectionTimeout: 5000
     defaultSoTimeout: 10000
     maxPerRoute: 100
-    MaxTotalConnection: 1000
+    maxTotalConnection: 1000
+    defaultConnectionRequestTimeout: 1000
+  proxy:
+    url:
+      userService: http://localhost:9999
 <%}%>
 ---
 spring:

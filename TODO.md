@@ -1,1 +1,5 @@
 - [ ] Add GORM support
+- [ ] Add mongo support
+- [ ] Add multi samples support
+- [ ] Testing code
+- [ ] A directory method supports copyTpl

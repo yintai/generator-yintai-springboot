@@ -43,21 +43,21 @@ dependencies {
         exclude module: 'spring-boot-starter-tomcat'
     }<%}%>
     <% if( actuator ) {%>compile('org.springframework.boot:spring-boot-starter-actuator')<%}%>
-    <% if ( jpa ) {%>compile('org.springframework.boot:spring-boot-starter-data-jpa')<%}%>
+    <% if( jpa ) {%>compile('org.springframework.boot:spring-boot-starter-data-jpa')<%}%>
     <% if( sql ) {%>//TODO Do not need h2 runtime in product environment.
     compile("org.jadira.usertype:usertype.core:4.0.0.GA") {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
     runtime('com.h2database:h2:1.4.190')
     runtime('org.postgresql:postgresql:9.4-1201-jdbc4')<%}%>
+    <% if( rpc ) {%>compile('org.nofdev:service-host-mvc:1.0.7')
+    compile('org.nofdev:service-client-java:1.0.7')<%}%>
     testCompile(
         'org.springframework.boot:spring-boot-starter-test',
         'org.spockframework:spock-core:1.0-groovy-2.4',
         'org.spockframework:spock-spring:1.0-groovy-2.4'
     )
-    <% if( hasSample ) {%>compile('org.nofdev:service-host-mvc:1.0.5')
-    compile('org.nofdev:service-client-java:1.0.5')
-    testCompile('org.mock-server:mockserver-netty:3.10.2')
+    <% if( hasSample ) {%>testCompile('org.mock-server:mockserver-netty:3.10.2')
     compile('net.logstash.logback:logstash-logback-encoder:4.5.1')<%}%>
 }
 

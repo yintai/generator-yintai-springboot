@@ -99,6 +99,11 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
                     {
                         name: 'Data-jpa',
                         value: 'jpa'
+                    },
+                    {
+                        name: 'NoFDev-RPC',
+                        value: 'rpc',
+                        checked: 'true'
                     }
                 ]
             },
@@ -143,12 +148,12 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
             this.props.jetty = hasDependencies("jetty");
             this.props.actuator = hasDependencies("actuator");
             this.props.jpa = hasDependencies("jpa");
-            if (this.props.databaseType == 'sql') {
-                this.props.sql = true;
-            } else {
-                this.props.sql = false;
+            this.props.sql = (this.props.databaseType == 'sql');
+            this.props.rpc = hasDependencies("rpc");
+            if (this.props.hasSample) {
+                this.props.rpc = this.props.hasSample;
             }
-
+            this.log(this.props.rpc);
             done();
         }.bind(this));
     },
@@ -156,35 +161,52 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
     writing: function () {
         var sourceDir = "src/main/groovy/";
         var resourcesDir = "src/main/resources/";
-        var testDir = "src/test/";
+        var testDir = "src/test/groovy/";
         var dockerDir = "src/main/docker/";
         var packageDir = this.props.packageName.replace(/\./g, '/') + '/';
+        var sampleDir = sourceDir + "com/yintai/sample/";
+        var sampleDestDir = sourceDir + packageDir + "sample/";
+        var sampleTestDir = testDir + "com/yintai/sample/";
+        var sampleDestTestDir = testDir + packageDir + "sample/";
 
         //gradle
-        this.template(this.templatePath('build.gradle'), this.destinationPath('build.gradle'), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template('build.gradle', 'build.gradle', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
         this.fs.copy(this.templatePath('gradlew'), this.destinationPath('gradlew'));
         this.fs.copy(this.templatePath('gradlew.bat'), this.destinationPath('gradlew.bat'));
         this.fs.copy(this.templatePath('gradle/wrapper/gradle-wrapper.jar'), this.destinationPath('gradle/wrapper/gradle-wrapper.jar'));
         this.fs.copy(this.templatePath('gradle/wrapper/gradle-wrapper.properties'), this.destinationPath('gradle/wrapper/gradle-wrapper.properties'));
 
         //app
-        this.template(this.templatePath(sourceDir + 'com/yintai/Application.groovy'), this.destinationPath(sourceDir + packageDir + this.props.applicationName + ".groovy"), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template(sourceDir + 'com/yintai/Application.groovy', sourceDir + packageDir + this.props.applicationName + ".groovy", this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
 
         //resources
-        this.template(this.templatePath(resourcesDir + 'application.yml'), this.destinationPath(resourcesDir + 'application.yml'), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template(resourcesDir + 'application.yml', resourcesDir + 'application.yml', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
         if (this.props.jetty) {
             this.fs.copy(this.templatePath(resourcesDir + 'keystore.jks'), this.destinationPath(resourcesDir + 'keystore.jks'));
         }
         //TODO test
 
         //docker
-        this.template(this.templatePath(dockerDir + "Dockerfile"), this.destinationPath(dockerDir + "Dockerfile"), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template(dockerDir + "Dockerfile", dockerDir + "Dockerfile", this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
 
         //readme
-        this.template(this.templatePath('README.md'), this.destinationPath('README.md'), this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template('README.md', 'README.md', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
 
         //git
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
+
+        //sample
+        this.template(sampleDir + "ConnectionConfiguration.groovy", sampleDestDir + "ConnectionConfiguration.groovy", this.props);
+        this.template(sampleDir + "ConnectionSettings.groovy", sampleDestDir + "ConnectionSettings.groovy", this.props);
+        this.template(sampleDir + "ProxyConfiguration.groovy", sampleDestDir + "ProxyConfiguration.groovy", this.props);
+        this.template(sampleDir + "ProxySettings.groovy", sampleDestDir + "ProxySettings.groovy", this.props);
+        this.template(sampleDir + "ProxyUrl.groovy", sampleDestDir + "ProxyUrl.groovy", this.props);
+        this.template(sampleDir + "UserCriteria.groovy", sampleDestDir + "UserCriteria.groovy", this.props);
+        this.template(sampleDir + "UserDTO.groovy", sampleDestDir + "UserDTO.groovy", this.props);
+        this.template(sampleDir + "UserFacade.groovy", sampleDestDir + "UserFacade.groovy", this.props);
+        this.template(sampleDir + "UserFacadeImpl.groovy", sampleDestDir + "UserFacadeImpl.groovy", this.props);
+        this.template(sampleDir + "UserService.groovy", sampleDestDir + "UserService.groovy", this.props);
+        this.template(sampleTestDir + "UserFacadeSpec.groovy", sampleDestTestDir + "UserFacadeSpec.groovy", this.props);
     },
 
     install: function () {
