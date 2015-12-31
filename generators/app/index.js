@@ -181,6 +181,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
 
         //resources
         this.template(resourcesDir + 'application.yml', resourcesDir + 'application.yml', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.fs.copy(this.templatePath(resourcesDir + 'logback-spring.xml'), this.destinationPath(resourcesDir + 'logback-spring.xml'));
         if (this.props.jetty) {
             this.fs.copy(this.templatePath(resourcesDir + 'keystore.jks'), this.destinationPath(resourcesDir + 'keystore.jks'));
         }

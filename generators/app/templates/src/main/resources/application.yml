@@ -27,7 +27,8 @@ spring:
   <%}%>
 ---
 spring:
-  profiles: test
+  profiles: testing
+  logging.logstash.destination: changeme
 <% if( sql ) {%>
   datasource:
     driverClassName: org.postgresql.Driver
@@ -68,7 +69,8 @@ spring:
 <%}%>
 ---
 spring:
-  profiles: product
+  profiles: production
+  logging.logstash.destination: changeme
 <% if( sql ) {%>
   datasource:
     driverClassName: org.postgresql.Driver

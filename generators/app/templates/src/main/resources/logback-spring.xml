@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m : %X{Service-Context-CallId}%n</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="!production">
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="testing, production">
+        <springProperty name="logstashDestination" source="logging.logstash.destination"/>
+        <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <keepAliveDuration>5 minutes</keepAliveDuration>
+            <destination>${logstashDestination}</destination>
+            <secondaryConnectionTTL>5 minutes</secondaryConnectionTTL>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+                <includeMdcKeyName>Service-Context-CallId</includeMdcKeyName>
+                <prefix class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+                    <layout class="ch.qos.logback.classic.PatternLayout">
+                        <pattern>~~~json~~~</pattern>
+                    </layout>
+                </prefix>
+            </encoder>
+        </appender>
+
+        <root level="DEBUG">
+            <appender-ref ref="LOGSTASH"/>
+        </root>
+    </springProfile>
+
+    <logger name="org.apache" level="INFO"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="jndi" level="INFO"/>
+    <logger name="org.hibernate" level="INFO"/>
+</configuration>
