@@ -20,7 +20,7 @@ class UserFacadeImpl implements UserFacade {
     @Override
     PagedList<UserDTO> findUsersByNameLike(String nameLike, Paginator paginator) {
         log.debug("Begin a rpc.")
-        def users = userService.findUsersByCriteria(new UserCriteria(nameLike:'zhangsan'),Paginator.page(1,10))
+        def users = userService.findUsersByCriteria(new UserCriteria(nameLike:nameLike),paginator)
         log.debug("I have get the result.")
         users
     }
