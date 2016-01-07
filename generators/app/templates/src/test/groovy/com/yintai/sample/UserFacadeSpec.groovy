@@ -5,6 +5,7 @@ import <%=packageName%>.<%=applicationName%>
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.StringBody
 import org.nofdev.servicefacade.PagedList
 import org.nofdev.servicefacade.Paginator
 import org.springframework.beans.factory.annotation.Autowired
