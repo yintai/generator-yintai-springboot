@@ -5,7 +5,9 @@ import <%=packageName%>.<%=applicationName%>
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
+import org.mockserver.model.StringBody
 import org.nofdev.servicefacade.PagedList
+import org.nofdev.servicefacade.Paginator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.SpringApplicationContextLoader
 import org.springframework.test.context.ActiveProfiles
@@ -46,13 +48,21 @@ class UserFacadeSpec extends Specification {
         setup:
         mockServer.when(
                 HttpRequest.request()
-                        .withPath("/service/json/<%=packageName%>.sample/User/findUsersByCriteria")
+                		.withMethod("POST")//method matches
+                        .withPath("/service/json/<%=packageName%>.sample/User/findUsersByCriteria")//path matches
+                        .withBody(new StringBody("params=" + URLEncoder.encode(//body matches
+                        objectMapper.writeValueAsString(
+                                [
+                                        new UserCriteria(nameLike: "tom"),
+                                        Paginator.page(1, 10)
+                                ]
+                        ), "UTF-8")))
         ).respond(
                 HttpResponse.response()
                         .withStatusCode(200)
-                        .withBody(objectMapper.writeValueAsString([callId: UUID.randomUUID().toString(), val: PagedList.wrap([new UserDTO(name: 'zhangsan', age: 10, birthday: OffsetDateTime.now(ZoneOffset.UTC)), new UserDTO(name: 'lisi', age: 20, birthday: OffsetDateTime.now(ZoneOffset.UTC))]), err: null]).toString())
+                        .withBody(objectMapper.writeValueAsString([callId: UUID.randomUUID().toString(), val: PagedList.wrap([new UserDTO(name: 'tom', age: 10, birthday: OffsetDateTime.now(ZoneOffset.UTC)), new UserDTO(name: 'tomato', age: 20, birthday: OffsetDateTime.now(ZoneOffset.UTC))]), err: null]).toString())
         )
-        def result = userFacade.findUsersByNameLike('zhangsan', null)
+        def result = userFacade.findUsersByNameLike('tom', Paginator.page(1, 10))
 
         expect:
         result.totalCount == 2
