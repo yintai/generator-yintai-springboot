@@ -21,6 +21,7 @@ npm install -g https://github.com/yintai/generator-yintai-springboot.git
 ```bash
 git clone git@github.com:yintai/generator-yintai-springboot.git
 cd generator-yintai-springboot/
+npm install
 npm link
 ```
 
