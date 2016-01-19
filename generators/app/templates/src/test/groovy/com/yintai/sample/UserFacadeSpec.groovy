@@ -18,9 +18,6 @@ import spock.lang.Specification
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
-/**
- * Created by Qiang on 12/28/15.
- */
 @WebAppConfiguration
 @ActiveProfiles(value = "test")
 @ContextConfiguration(loader = SpringApplicationContextLoader, classes = [<%=applicationName%>])

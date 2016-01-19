@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-/**
- * Created by wangxuesong on 15/8/7.
- */
 @CompileStatic
 @Configuration
 class ProxyConfiguration {

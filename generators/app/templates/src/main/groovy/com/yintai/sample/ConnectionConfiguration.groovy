@@ -12,9 +12,6 @@ import java.security.KeyManagementException
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 
-/**
- * Created by wangxuesong on 15/8/7.
- */
 @CompileStatic
 @Configuration
 class ConnectionConfiguration {
