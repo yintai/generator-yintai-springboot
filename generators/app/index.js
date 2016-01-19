@@ -197,17 +197,20 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
         this.fs.copy(this.templatePath('gitignore'), this.destinationPath('.gitignore'));
 
         //sample
-        this.template(sampleDir + "ConnectionConfiguration.groovy", sampleDestDir + "ConnectionConfiguration.groovy", this.props);
-        this.template(sampleDir + "ConnectionSettings.groovy", sampleDestDir + "ConnectionSettings.groovy", this.props);
-        this.template(sampleDir + "ProxyConfiguration.groovy", sampleDestDir + "ProxyConfiguration.groovy", this.props);
-        this.template(sampleDir + "ProxySettings.groovy", sampleDestDir + "ProxySettings.groovy", this.props);
-        this.template(sampleDir + "ProxyUrl.groovy", sampleDestDir + "ProxyUrl.groovy", this.props);
-        this.template(sampleDir + "UserCriteria.groovy", sampleDestDir + "UserCriteria.groovy", this.props);
-        this.template(sampleDir + "UserDTO.groovy", sampleDestDir + "UserDTO.groovy", this.props);
-        this.template(sampleDir + "UserFacade.groovy", sampleDestDir + "UserFacade.groovy", this.props);
-        this.template(sampleDir + "UserFacadeImpl.groovy", sampleDestDir + "UserFacadeImpl.groovy", this.props);
-        this.template(sampleDir + "UserService.groovy", sampleDestDir + "UserService.groovy", this.props);
-        this.template(sampleTestDir + "UserFacadeSpec.groovy", sampleDestTestDir + "UserFacadeSpec.groovy", this.props);
+        if (this.props.hasSample) {
+            this.template(sampleDir + "ConnectionConfiguration.groovy", sampleDestDir + "ConnectionConfiguration.groovy", this.props);
+            this.template(sampleDir + "ConnectionSettings.groovy", sampleDestDir + "ConnectionSettings.groovy", this.props);
+            this.template(sampleDir + "ProxyConfiguration.groovy", sampleDestDir + "ProxyConfiguration.groovy", this.props);
+            this.template(sampleDir + "ProxySettings.groovy", sampleDestDir + "ProxySettings.groovy", this.props);
+            this.template(sampleDir + "ProxyUrl.groovy", sampleDestDir + "ProxyUrl.groovy", this.props);
+            this.template(sampleDir + "UserCriteria.groovy", sampleDestDir + "UserCriteria.groovy", this.props);
+            this.template(sampleDir + "UserDTO.groovy", sampleDestDir + "UserDTO.groovy", this.props);
+            this.template(sampleDir + "UserFacade.groovy", sampleDestDir + "UserFacade.groovy", this.props);
+            this.template(sampleDir + "UserFacadeImpl.groovy", sampleDestDir + "UserFacadeImpl.groovy", this.props);
+            this.template(sampleDir + "UserService.groovy", sampleDestDir + "UserService.groovy", this.props);
+            this.template(sampleTestDir + "UserFacadeSpec.groovy", sampleDestTestDir + "UserFacadeSpec.groovy", this.props);
+        }
+
     },
 
     install: function () {
