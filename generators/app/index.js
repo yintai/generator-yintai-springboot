@@ -79,7 +79,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
                 type: 'string',
                 name: 'springBootVersion',
                 message: '(9/11) What version of Spring Boot would you like to use?',
-                default: '1.3.1.RELEASE'
+                default: '1.3.2.RELEASE'
             },
             {
                 type: 'checkbox',
@@ -171,6 +171,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
 
         //gradle
         this.template('build.gradle', 'build.gradle', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
+        this.template('gradle.properties', 'gradle.properties', this.props, {'interpolate': /<%=([\s\S]+?)%>/g});
         this.fs.copy(this.templatePath('gradlew'), this.destinationPath('gradlew'));
         this.fs.copy(this.templatePath('gradlew.bat'), this.destinationPath('gradlew.bat'));
         this.fs.copy(this.templatePath('gradle/wrapper/gradle-wrapper.jar'), this.destinationPath('gradle/wrapper/gradle-wrapper.jar'));

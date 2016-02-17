@@ -73,20 +73,19 @@ task wrapper(type: Wrapper) {
 }
 
 task buildDocker(type: Docker, dependsOn: build) {
-  push = false
-  applicationName = jar.baseName
-  dockerfile = file('src/main/docker/Dockerfile')
+    push = false
+    applicationName = jar.baseName
+    dockerfile = file('src/main/docker/Dockerfile')
 
-  // TODO A workaround to resolve dynamic builded jar file name.
-  addFile "${applicationName}-${version}.jar", "app.jar"
-  runCommand "bash -c 'touch /app.jar'"
-
-  doFirst {
-    copy {
-      from jar
-      into stageDir
+    doFirst {
+        copy {
+            from (jar) {
+                include "*${version}.jar"
+                rename "(.*)-${version}(.*)", '$1$2'
+            }
+            into stageDir
+        }
     }
-  }
 }
 
 release {
