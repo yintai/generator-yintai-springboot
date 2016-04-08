@@ -79,7 +79,7 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
                 type: 'string',
                 name: 'springBootVersion',
                 message: '(9/11) What version of Spring Boot would you like to use?',
-                default: '1.3.2.RELEASE'
+                default: '1.3.3.RELEASE'
             },
             {
                 type: 'checkbox',
