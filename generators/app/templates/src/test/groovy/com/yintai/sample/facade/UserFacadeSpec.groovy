@@ -1,7 +1,8 @@
-package <%=packageName%>.sample
+package <%=packageName%>.sample.facade
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import <%=packageName%>.<%=applicationName%>
+import <%=packageName%>.sample.service.UserCriteria
 import org.mockserver.integration.ClientAndServer
 import org.mockserver.model.HttpRequest
 import org.mockserver.model.HttpResponse
@@ -46,7 +47,7 @@ class UserFacadeSpec extends Specification {
         mockServer.when(
                 HttpRequest.request()
                 		.withMethod("POST")//method matches
-                        .withPath("/service/json/<%=packageName%>.sample/User/findUsersByCriteria")//path matches
+                        .withPath("/service/json/<%=packageName%>.sample.service/User/findUsersByCriteria")//path matches
                         .withBody(new StringBody("params=" + URLEncoder.encode(//body matches
                         objectMapper.writeValueAsString(
                                 [
@@ -63,5 +64,12 @@ class UserFacadeSpec extends Specification {
 
         expect:
         result.totalCount == 2
+    }
+    
+    void "测试远程 Service 服务宕机的情况. "() {
+        when:
+        userFacade.findUsersByNameLike('tom', Paginator.page(1, 10))
+        then:
+        thrown(Exception)
     }
 }

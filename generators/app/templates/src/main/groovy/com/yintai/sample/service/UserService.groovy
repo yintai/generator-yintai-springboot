@@ -1,4 +1,4 @@
-package <%=packageName%>.sample
+package <%=packageName%>.sample.service
 
 import org.nofdev.servicefacade.PagedList
 import org.nofdev.servicefacade.Paginator

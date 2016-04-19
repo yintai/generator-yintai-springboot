@@ -204,12 +204,13 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
             this.template(sampleDir + "ProxyConfiguration.groovy", sampleDestDir + "ProxyConfiguration.groovy", this.props);
             this.template(sampleDir + "ProxySettings.groovy", sampleDestDir + "ProxySettings.groovy", this.props);
             this.template(sampleDir + "ProxyUrl.groovy", sampleDestDir + "ProxyUrl.groovy", this.props);
-            this.template(sampleDir + "UserCriteria.groovy", sampleDestDir + "UserCriteria.groovy", this.props);
-            this.template(sampleDir + "UserDTO.groovy", sampleDestDir + "UserDTO.groovy", this.props);
-            this.template(sampleDir + "UserFacade.groovy", sampleDestDir + "UserFacade.groovy", this.props);
-            this.template(sampleDir + "UserFacadeImpl.groovy", sampleDestDir + "UserFacadeImpl.groovy", this.props);
-            this.template(sampleDir + "UserService.groovy", sampleDestDir + "UserService.groovy", this.props);
-            this.template(sampleTestDir + "UserFacadeSpec.groovy", sampleDestTestDir + "UserFacadeSpec.groovy", this.props);
+            this.template(sampleDir + "service/UserCriteria.groovy", sampleDestDir + "service/UserCriteria.groovy", this.props);
+            this.template(sampleDir + "service/UserDTO.groovy", sampleDestDir + "service/UserDTO.groovy", this.props);
+            this.template(sampleDir + "service/UserService.groovy", sampleDestDir + "service/UserService.groovy", this.props);
+            this.template(sampleDir + "facade/UserDTO.groovy", sampleDestDir + "facade/UserDTO.groovy", this.props);
+            this.template(sampleDir + "facade/UserFacade.groovy", sampleDestDir + "facade/UserFacade.groovy", this.props);
+            this.template(sampleDir + "facade/UserFacadeImpl.groovy", sampleDestDir + "facade/UserFacadeImpl.groovy", this.props);
+            this.template(sampleTestDir + "facade/UserFacadeSpec.groovy", sampleDestTestDir + "facade/UserFacadeSpec.groovy", this.props);
         }
 
     },

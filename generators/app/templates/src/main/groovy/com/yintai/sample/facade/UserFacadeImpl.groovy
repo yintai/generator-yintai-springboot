@@ -1,5 +1,7 @@
-package <%=packageName%>.sample
+package <%=packageName%>.sample.facade
 
+import <%=packageName%>.sample.service.UserCriteria
+import <%=packageName%>.sample.service.UserService
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.nofdev.servicefacade.PagedList
@@ -20,6 +22,6 @@ class UserFacadeImpl implements UserFacade {
         log.debug("Begin a rpc.")
         def users = userService.findUsersByCriteria(new UserCriteria(nameLike:nameLike),paginator)
         log.debug("I have get the result.")
-        users
+        new PagedList<UserDTO>(users.totalCount, paginator, users.list as ArrayList<UserDTO>)
     }
 }

@@ -1,5 +1,6 @@
 package <%=packageName%>.sample
 
+import <%=packageName%>.sample.service.UserService
 import groovy.transform.CompileStatic
 import org.nofdev.http.DefaultProxyStrategyImpl
 import org.nofdev.http.DefaultRequestConfig

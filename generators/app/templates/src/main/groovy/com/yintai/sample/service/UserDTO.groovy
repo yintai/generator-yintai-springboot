@@ -1,4 +1,4 @@
-package <%=packageName%>.sample
+package <%=packageName%>.sample.service
 
 import java.time.OffsetDateTime
 
