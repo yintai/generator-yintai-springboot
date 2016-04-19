@@ -210,6 +210,8 @@ var SpringbootGenerator = module.exports = yeoman.generators.Base.extend({
             this.template(sampleDir + "facade/UserDTO.groovy", sampleDestDir + "facade/UserDTO.groovy", this.props);
             this.template(sampleDir + "facade/UserFacade.groovy", sampleDestDir + "facade/UserFacade.groovy", this.props);
             this.template(sampleDir + "facade/UserFacadeImpl.groovy", sampleDestDir + "facade/UserFacadeImpl.groovy", this.props);
+            this.template(sampleDir + "facade/HelloFacade.groovy", sampleDestDir + "facade/HelloFacade.groovy", this.props);
+            this.template(sampleDir + "facade/HelloFacadeImpl.groovy", sampleDestDir + "facade/HelloFacadeImpl.groovy", this.props);
             this.template(sampleTestDir + "facade/UserFacadeSpec.groovy", sampleDestTestDir + "facade/UserFacadeSpec.groovy", this.props);
         }
 
