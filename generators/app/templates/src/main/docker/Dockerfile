@@ -1,6 +1,12 @@
-FROM java:8
+FROM java:8-jre-alpine
 VOLUME /tmp
-ADD <%= baseName %>.jar app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+ENV APP_HOME /usr/local/app
+
+RUN mkdir -p "$APP_HOME"
+WORKDIR $APP_HOME
+
+ADD app.jar app.jar
+RUN bash -c "touch app.jar"
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
 EXPOSE 8080

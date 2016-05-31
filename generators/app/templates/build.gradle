@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '<%= springBootVersion %>'
     }
     repositories {
+        mavenLocal()
         <% if( extraMavenRepo!='' ) {%>maven { url '<%=extraMavenRepo%>' }<%}%>
         mavenCentral()
     }
@@ -32,6 +33,7 @@ targetCompatibility = 1.8
 [compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.encoding = 'UTF-8'
 
 repositories {
+    mavenLocal()
     <% if( extraMavenRepo!='' ) {%>maven { url '<%=extraMavenRepo%>' }<%}%>
     mavenCentral()
 }
@@ -81,7 +83,7 @@ task buildDocker(type: Docker, dependsOn: build) {
         copy {
             from (jar) {
                 include "*${version}.jar"
-                rename "(.*)-${version}(.*)", '$1$2'
+                rename "(.*)-${version}(.*)", 'app.jar'
             }
             into stageDir
         }
