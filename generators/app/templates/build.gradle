@@ -40,7 +40,7 @@ repositories {
 
 dependencies {
     compile('org.codehaus.groovy:groovy')
-    <% if( jetty ) {%>compile('org.springframework.boot:spring-boot-starter-undertow')
+    <% if( jetty ) {%>compile('org.springframework.boot:spring-boot-starter-jetty')
     compile('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }<%}%>
