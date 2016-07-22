@@ -10,18 +10,16 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath('se.transmode.gradle:gradle-docker:1.2')
-        classpath('net.researchgate:gradle-release:2.3.4')
     }
 }
 
-group = '<%=organizationName%>'
+group '<%=organizationName%>'
 
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 apply plugin: 'docker'
-apply plugin: 'net.researchgate.release'
 
 jar {
     baseName = '<%= baseName %>'
@@ -54,13 +52,14 @@ dependencies {
     runtime('org.postgresql:postgresql:9.4-1201-jdbc4')<%}%>
     <% if( rpc ) {%>compile('org.nofdev:service-host-mvc:1.1.1')
     compile('org.nofdev:service-client-java:1.1.0')<%}%>
+    compile('ch.qos.logback.contrib:logback-jackson:0.1.5')
+    compile('ch.qos.logback.contrib:logback-json-classic:0.1.5')
     testCompile(
         'org.springframework.boot:spring-boot-starter-test',
         'org.spockframework:spock-core:1.0-groovy-2.4',
         'org.spockframework:spock-spring:1.0-groovy-2.4'
     )
-    <% if( hasSample ) {%>testCompile('org.mock-server:mockserver-netty:3.10.2')
-    compile('net.logstash.logback:logstash-logback-encoder:4.5.1')<%}%>
+    <% if( hasSample ) {%>testCompile('org.mock-server:mockserver-netty:3.10.2')<%}%>
 }
 
 eclipse {
@@ -88,13 +87,5 @@ task buildDocker(type: Docker, dependsOn: build) {
             into stageDir
         }
     }
+    dryRun = true
 }
-
-release {
-    git {
-        requireBranch = 'develop'
-        pushToRemote = 'origin'
-        pushToBranchPrefix = ''
-    }
-}
-afterReleaseBuild.dependsOn buildDocker
