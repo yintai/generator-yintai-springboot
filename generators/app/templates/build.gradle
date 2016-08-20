@@ -51,7 +51,7 @@ dependencies {
     runtime('com.h2database:h2:1.4.190')
     runtime('org.postgresql:postgresql:9.4-1201-jdbc4')<%}%>
     <% if( rpc ) {%>compile('org.nofdev:service-host-mvc:1.1.1')
-    compile('org.nofdev:service-client-java:1.1.0')<%}%>
+    compile('org.nofdev:service-client-java:1.1.2')<%}%>
     compile('ch.qos.logback.contrib:logback-jackson:0.1.5')
     compile('ch.qos.logback.contrib:logback-json-classic:0.1.5')
     testCompile(
